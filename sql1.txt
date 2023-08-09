@@ -1,0 +1,96 @@
+create database shop;
+use shop;
+create table branches(
+	id int primary key,
+    name varchar(50),
+    est_date date,
+    city varchar(20)
+);
+create table department(
+	id int primary key,
+    name varchar(50),
+    responsibilities text,
+    branch_id int,
+    foreign key (branch_id)
+    references branches(id)
+);
+create table employees(
+	id int primary key,
+	name varchar(50),
+    age int,
+    salary int,
+    department_id int,
+    foreign key (department_id) 
+    references department(id)
+);
+
+-- ---------------------------------------
+
+-- 1
+-- select name from employees 
+-- where salary < 1000;
+
+-- 2
+-- select e.name , d.name from
+-- employees e 
+-- inner join
+-- department d
+-- on e.department_id = d.id;
+
+-- 3 
+-- select d.name , avg(e.salary) from
+-- employees e
+-- join
+-- department d
+-- on e.department_id = d.id
+-- group by d.name;
+
+-- 4
+-- select d.name from
+-- department d inner join branches b
+-- on d.branch_id = b.id where
+-- b.city = 'Esfahan';
+
+-- 5
+-- select b.name,count(e.id) from
+-- employees e inner join department d
+-- inner join branches b
+-- on e.department_id = d.id and d.branch_id = b.id
+-- group by b.name; 
+
+-- 6
+-- select e.name as 'emp name' , b.name as 'branch name' from
+-- employees e inner join department d
+-- inner join branches b 
+-- on e.department_id = d.id and d.branch_id = b.id;
+
+-- 7
+-- select b.name as 'branch name',avg(e.salary) from
+-- employees e inner join department d
+-- inner join branches b 
+-- on e.department_id = d.id and d.branch_id = b.id
+-- where b.city = 'Esfahan';
+
+-- 8
+-- select b.name as 'branch name',count(e.id) from
+-- employees e inner join department d
+-- inner join branches b 
+-- on e.department_id = d.id and d.branch_id = b.id
+-- group by b.name;
+
+-- 9
+-- select d.name as 'department name' , count(e.id) from
+-- employees e right join department d 
+-- on e.department_id = d.id 
+-- left join branches b
+-- on d.branch_id = b.id
+-- where b.city = 'Esfahan'
+-- group by d.id;
+
+-- 10
+-- select b.name as 'branch name' from
+-- employees e inner join department d
+-- inner join branches b 
+-- on e.department_id = d.id and d.branch_id = b.id
+-- group by b.name
+-- having count(e.id) < 10;
